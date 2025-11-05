@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Edge RAG for Field Service — Exercise Demo</title>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;background:#0b0b0c;color:#f5f6f8}
+main{max-width:860px;margin:0 auto;padding:28px 16px}
+h1{margin:0 0 4px;font-size:28px}.sub{color:#b9bcc2;margin-bottom:16px}
+.card{border:1px solid #1f232b;background:#0f1115;padding:16px;border-radius:14px;margin:10px 0}
+input,textarea{width:100%;background:#0b0d11;color:#f5f6f8;border:1px solid #2a2d34;border-radius:10px;padding:10px}
+button{background:#111317;color:#fff;border:1px solid #2a2d34;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600}
+.small{font-size:12px;color:#9aa0a6}
+</style>
+</head>
+<body>
+<main>
+  <h1>Edge RAG for Field Service</h1>
+  <div class="sub">Local document Q&A for field techs (offline manuals + photos). Points-only preview. No data leaves the device in this demo.</div>
+  <div class="card">
+    <h3>Interactive Toy</h3>
+    <p>Paste a brief field task. The demo simulates what the MVP would respond (not connected to real docs yet).</p>
+    <textarea id="prompt" rows="5" placeholder="Example: How do I reset model X-200 pump without network?"></textarea>
+    <div style="margin-top:10px"><button id="runBtn">Run Demo</button></div>
+    <pre id="out" class="card" style="white-space:pre-wrap"></pre>
+    <div class="small">Static simulation. The real MVP would call local/edge tools.</div>
+  </div>
+  <div class="card">
+    <h3>Co-build with us</h3>
+    <p>Drop an email to join the operator thread for this narrative.</p>
+    <input id="email" type="email" placeholder="you@company.com">
+    <div style="margin-top:10px"><button id="joinBtn">Request Access</button></div>
+    <div class="small" id="msg"></div>
+  </div>
+</main>
+<script>
+document.getElementById("runBtn").onclick = () => {
+  const p = document.getElementById("prompt").value.trim();
+  const out = document.getElementById("out");
+  if (!p) { out.textContent = "Please enter a task."; return; }
+  out.textContent = "Pretend edge agent for: Edge RAG for Field Service\\n\\n"
+    + "Input:\\n" + p + "\\n\\n"
+    + "Likely next steps:\\n"
+    + "1) Parse device model/version from input.\\n"
+    + "2) Load local manual snippets + last known fixes.\\n"
+    + "3) Extract steps and render an offline checklist.\\n"
+    + "4) Ask for a photo if needed to confirm a part number.";
+};
+document.getElementById("joinBtn").onclick = () => {
+  const email = document.getElementById("email").value.trim();
+  const msg = document.getElementById("msg");
+  if (!email || !email.includes("@")) { msg.textContent = "Enter a valid email."; return; }
+  msg.textContent = "Thanks! We’ll reach out when this moves to a full build.";
+};
+</script>
+</body>
+</html>
