@@ -3,37 +3,118 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Edge RAG for Field Service — Exercise Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;background:#0b0b0c;color:#f5f6f8}
-main{max-width:860px;margin:0 auto;padding:28px 16px}
-h1{margin:0 0 4px;font-size:28px}.sub{color:#b9bcc2;margin-bottom:16px}
-.card{border:1px solid #1f232b;background:#0f1115;padding:16px;border-radius:14px;margin:10px 0}
-input,textarea{width:100%;background:#0b0d11;color:#f5f6f8;border:1px solid #2a2d34;border-radius:10px;padding:10px}
-button{background:#111317;color:#fff;border:1px solid #2a2d34;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600}
-.small{font-size:12px;color:#9aa0a6}
+:root{--bg:#0b0c10;--panel:#0f1115;--panel2:#0d1016;--text:#e9ecf1;--muted:#a7afbd;--border:#1f232b;--accent:#6ea8ff;--ok:#46cf8e}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(1200px 800px at 80% -10%,rgba(110,168,255,.12),transparent 40%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+main{max-width:980px;margin:0 auto;padding:28px 16px}
+h1{margin:8px 0 4px;font-size:32px} .sub{color:var(--muted);margin-bottom:18px}
+.section{border:1px solid var(--border);background:linear-gradient(180deg,var(--panel),var(--panel2));border-radius:16px;padding:18px;margin:12px 0}
+label{display:block;font-size:13px;color:var(--muted);margin:8px 0 6px}
+input,textarea{width:100%;background:#0b0d11;color:var(--text);border:1px solid #2a2d34;border-radius:10px;padding:12px}
+button{background:#111317;color:#fff;border:1px solid #2a2d34;padding:12px 16px;border-radius:10px;cursor:pointer;font-weight:700}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.card{flex:1 1 260px;border:1px solid var(--border);background:#0c0f15;border-radius:14px;padding:14px}
+.card h3{margin:6px 0 6px} .price{font-size:28px;font-weight:800}
+ul{margin:10px 0 0 18px;color:var(--muted)} li{margin:6px 0}
+.small{font-size:12px;color:var(--muted)}
+.notice{font-size:12px;color:var(--muted);border:1px dashed #2a2d34;border-radius:10px;padding:10px;margin-top:8px}
+pre{white-space:pre-wrap}
+footer{padding:22px;color:#8a8f98;text-align:center}
+.success{color:var(--ok);font-weight:700}
+.error{color:#ff7d7d;font-weight:700}
 </style>
 </head>
 <body>
 <main>
   <h1>Edge RAG for Field Service</h1>
-  <div class="sub">Local document Q&A for field techs (offline manuals + photos). Points-only preview. No data leaves the device in this demo.</div>
-  <div class="card">
+  <div class="sub">Local document Q&A for field techs (offline manuals + photos). This is an exercised preview.</div>
+
+  <!-- Interactive toy (unchanged) -->
+  <div class="section">
     <h3>Interactive Toy</h3>
     <p>Paste a brief field task. The demo simulates what the MVP would respond (not connected to real docs yet).</p>
     <textarea id="prompt" rows="5" placeholder="Example: How do I reset model X-200 pump without network?"></textarea>
     <div style="margin-top:10px"><button id="runBtn">Run Demo</button></div>
-    <pre id="out" class="card" style="white-space:pre-wrap"></pre>
-    <div class="small">Static simulation. The real MVP would call local/edge tools.</div>
+    <pre id="out" class="section"></pre>
+    <div class="small">Static simulation. The real MVP runs on-device and pulls from local manuals/photos.</div>
   </div>
-  <div class="card">
-    <h3>Co-build with us</h3>
-    <p>Drop an email to join the operator thread for this narrative.</p>
-    <input id="email" type="email" placeholder="you@company.com">
-    <div style="margin-top:10px"><button id="joinBtn">Request Access</button></div>
-    <div class="small" id="msg"></div>
+
+  <!-- Pricing -->
+  <div class="section">
+    <h2>Pricing</h2>
+    <div class="row">
+      <div class="card">
+        <h3>Starter</h3>
+        <div class="price">$1,500/mo</div>
+        <ul>
+          <li>Up to 20 techs</li>
+          <li>Local manual ingest (PDF/HTML)</li>
+          <li>Photo confirm step</li>
+          <li>Email support</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Department</h3>
+        <div class="price">$2,900/mo</div>
+        <ul>
+          <li>Up to 100 techs</li>
+          <li>SSO + checklists export</li>
+          <li>Basic analytics</li>
+          <li>Business-hours support</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Enterprise</h3>
+        <div class="price">Custom</div>
+        <ul>
+          <li>Unlimited techs/sites</li>
+          <li>On-prem packaging</li>
+          <li>Fleet monitoring</li>
+          <li>SLA &amp; security review</li>
+        </ul>
+      </div>
+    </div>
+    <div class="notice">Pilot KPI: <b>reduce MTTR by 20% in 14 days</b>. Ask for a 2-week pilot.</div>
   </div>
+
+  <!-- Request Pilot -->
+  <div class="section">
+    <h2>Request a Pilot</h2>
+    <div class="row">
+      <div style="flex:1 1 320px">
+        <label>Your name</label><input id="lead_name" placeholder="Jane Operator">
+      </div>
+      <div style="flex:1 1 320px">
+        <label>Company</label><input id="lead_company" placeholder="Acme Utilities">
+      </div>
+      <div style="flex:1 1 320px">
+        <label>Work email</label><input id="lead_email" type="email" placeholder="jane@acme.com">
+      </div>
+    </div>
+    <label>Use-case (what workflow are you targeting?)</label>
+    <textarea id="lead_usecase" rows="4" placeholder="e.g., reset SOPs for X-200 pumps; offline faults triage; photo steps for junior techs"></textarea>
+    <div style="margin-top:10px"><button id="leadBtn">Request Pilot</button></div>
+    <div id="lead_msg" class="small"></div>
+  </div>
+
+  <!-- One-pager -->
+  <div class="section">
+    <h2>One-pager</h2>
+    <p class="small">Need internal buy-in? Generate a PDF one-pager for your team (value, pilot KPI, pricing).</p>
+    <div style="display:flex; gap:10px; align-items:center;">
+      <button id="pdfBtn">Generate PDF</button>
+      <span id="pdf_msg" class="small"></span>
+    </div>
+  </div>
+
+  <footer>Points-only preview. No data leaves your device in this demo.</footer>
 </main>
+
 <script>
+const API_BASE = "https://nox-proxy.ali-t-chodri.workers.dev"; // e.g., https://nox-proxy.ali-t-chodri.workers.dev
+
 document.getElementById("runBtn").onclick = () => {
   const p = document.getElementById("prompt").value.trim();
   const out = document.getElementById("out");
@@ -46,12 +127,56 @@ document.getElementById("runBtn").onclick = () => {
     + "3) Extract steps and render an offline checklist.\\n"
     + "4) Ask for a photo if needed to confirm a part number.";
 };
-document.getElementById("joinBtn").onclick = () => {
-  const email = document.getElementById("email").value.trim();
-  const msg = document.getElementById("msg");
-  if (!email || !email.includes("@")) { msg.textContent = "Enter a valid email."; return; }
-  msg.textContent = "Thanks! We’ll reach out when this moves to a full build.";
+
+document.getElementById("leadBtn").onclick = async () => {
+  const msg = document.getElementById("lead_msg");
+  const payload = {
+    narrative_id: "e2",
+    name: document.getElementById("lead_name").value.trim(),
+    company: document.getElementById("lead_company").value.trim(),
+    email: document.getElementById("lead_email").value.trim(),
+    usecase: document.getElementById("lead_usecase").value.trim()
+  };
+  if (!payload.name || !payload.email) {
+    msg.innerHTML = "<span class='error'>Name and email required.</span>"; return;
+  }
+  try {
+    const r = await fetch(API_BASE + "/lead", {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
+    });
+    const t = await r.text();
+    if (/OK/i.test(t)) {
+      msg.innerHTML = "<span class='success'>Thanks! We’ll reach out within 1–2 business days.</span>";
+      document.getElementById("lead_name").value = "";
+      document.getElementById("lead_company").value = "";
+      document.getElementById("lead_email").value = "";
+      document.getElementById("lead_usecase").value = "";
+    } else {
+      msg.innerHTML = "<span class='error'>Something went wrong: " + t + "</span>";
+    }
+  } catch(e) {
+    msg.innerHTML = "<span class='error'>Network error. Try again.</span>";
+  }
+};
+
+document.getElementById("pdfBtn").onclick = async () => {
+  const msg = document.getElementById("pdf_msg");
+  msg.textContent = "Generating…";
+  try {
+    const r = await fetch(API_BASE + "/onepager?e=e2");
+    const j = await r.json();
+    if (j && j.url) {
+      msg.innerHTML = "Ready: <a href='"+j.url+"' target='_blank' rel='noopener'>download PDF</a>";
+    } else {
+      msg.textContent = "Couldn’t generate. Try again.";
+    }
+  } catch(e) {
+    msg.textContent = "Network error.";
+  }
 };
 </script>
 </body>
 </html>
+
